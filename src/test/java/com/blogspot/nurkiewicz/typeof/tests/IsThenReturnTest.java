@@ -167,4 +167,16 @@ public class IsThenReturnTest {
 		//then
 		assertThat(result).isEqualTo(17);
 	}
+	
+    @Test
+    public void shouldNotReturnOrElseValueWhenSuccessful() {
+        // when
+        final Integer result = whenTypeOf("100").
+                is(String.class).thenReturn(Integer::valueOf).
+                is(Date.class).thenReturn(d -> (int) d.getTime()).
+                is(Float.class).thenReturn(Float::intValue).
+                orElse(x -> 12345);
+        
+        assertThat(result).isEqualTo(100);
+    }
 }
